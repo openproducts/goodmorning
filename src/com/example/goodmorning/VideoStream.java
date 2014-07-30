@@ -2,27 +2,27 @@ package com.example.goodmorning;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class VideoStream extends Activity implements OnClickListener {
     private Button startRadio;
-    private Button startVideo;
+	private final String proVersion = "com.mxtech.videoplayer.pro";
+	private final String adVersion = "com.mxtech.videoplayer.ad";
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.video_stream);
 		
 		
-		startRadio = (Button)findViewById(R.id.buttonRadio);
+		startRadio = (Button)findViewById(R.id.buttonVideo);
 		startRadio.setOnClickListener(this);
-		
-		startVideo = (Button)findViewById(R.id.buttonVideo);
-		startVideo.setOnClickListener(this);
 	}
 
 	@Override
@@ -34,16 +34,15 @@ public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		if(v.getId() == R.id.buttonRadio) {
-			Intent intent = new Intent(this, RadioStream.class);
-			startActivity(intent);
-		}
-		
 		if(v.getId() == R.id.buttonVideo) {
-			Intent intent = new Intent(this, VideoStream.class);
-			startActivity(intent);
+			Intent intent = new Intent(Intent.ACTION_VIEW);
+			Uri videoUri = Uri.parse("http://195.189.238.39/streaming/ntv/16/tvrec/playlist.m3u8");
+			intent.setDataAndType( videoUri, "application/x-mpegURL" );
+			intent.setPackage(adVersion );
+			startActivity( intent );
 		}
 		
 	}
 
 }
+
