@@ -23,5 +23,15 @@
         android:layout_below="@+id/textView1"
         android:layout_marginLeft="39dp"
         android:text="Video" />
+     
+     
+      <Button
+        android:id="@+id/buttonMusic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginLeft="39dp"
+        android:text="Music" />
 
 </LinearLayout>

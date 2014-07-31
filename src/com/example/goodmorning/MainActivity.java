@@ -11,12 +11,15 @@ import android.widget.Button;
 public class MainActivity extends Activity implements OnClickListener {
     private Button startRadio;
     private Button startVideo;
+    private Button startMusic;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 		
+		startMusic = (Button)findViewById(R.id.buttonMusic);
+		startMusic.setOnClickListener(this);
 		
 		startRadio = (Button)findViewById(R.id.buttonRadio);
 		startRadio.setOnClickListener(this);
@@ -41,6 +44,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		if(v.getId() == R.id.buttonVideo) {
 			Intent intent = new Intent(this, VideoStream.class);
+			startActivity(intent);
+		}
+		
+		if(v.getId() == R.id.buttonMusic) {
+			Intent intent = new Intent(this, Music.class);
 			startActivity(intent);
 		}
 		
