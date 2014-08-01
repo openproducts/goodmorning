@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-public class MainActivity extends Activity implements OnClickListener {
+public class MusicPlayingActivity extends Activity implements OnClickListener {
     private Button startRadio;
     private Button startVideo;
     private Button startMusic;

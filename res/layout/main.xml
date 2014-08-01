@@ -12,7 +12,7 @@
         android:layout_alignLeft="@+id/textView1"
         android:layout_below="@+id/textView1"
         android:layout_marginLeft="39dp"
-        android:text="Radio" />
+        android:text="SELECT MUSIC" />
     
     
      <Button
