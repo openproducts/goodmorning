@@ -1,7 +1,5 @@
+package models.weather;
 
-package pack;
-
-import java.util.List;
 
 public class Coord{
    	private Number lat;

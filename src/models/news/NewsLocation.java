@@ -1,7 +1,9 @@
 package models.news;
 
+import classes.JsonStringRealization;
 
-public class NewsLocation{
+
+public class NewsLocation implements JsonStringRealization {
    	private ResponseData responseData;
    	private String responseDetails;
    	private Number responseStatus;

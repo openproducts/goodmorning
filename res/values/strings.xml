@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Отвечают за прогресс - диалог-->
+    <string name="downloader_dialog_title">Получение данных</string>
+    <string name="downloader_dialog_message">Выполняется загрузка</string>
+    
+    <!-- Отвечают за общую информацию -->
     <string name="app_name">goodmorning</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    
+    
+    
 
 </resources>

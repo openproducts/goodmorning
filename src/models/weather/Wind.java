@@ -1,7 +1,4 @@
-
-package pack;
-
-import java.util.List;
+package models.weather;
 
 public class Wind{
    	private Number deg;

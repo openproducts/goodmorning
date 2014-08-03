@@ -1,9 +1,11 @@
+package models.weather;
 
-package pack;
 
 import java.util.List;
 
-public class WeatherLocation{
+import classes.JsonStringRealization;
+
+public class WeatherLocation implements JsonStringRealization {
    	private String base;
    	private Clouds clouds;
    	private Number cod;

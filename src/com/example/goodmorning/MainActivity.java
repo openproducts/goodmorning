@@ -5,22 +5,20 @@ import models.news.NewsLocation;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import classes.JsonFastTransformer;
+import classes.AsyncTaskCompleteListener;
+import classes.AsynchDownloader;
+import classes.JsonStringRealization;
 
-import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
-
-public class MainActivity extends Activity implements OnClickListener {
+public class MainActivity extends Activity implements OnClickListener, AsyncTaskCompleteListener<JsonStringRealization> {
     private Button startRadio;
     private Button startVideo;
     private Button startMusic;
     private Button addAction;
+    private AsynchDownloader<NewsLocation, JsonStringRealization> downloader;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,27 +64,19 @@ public class MainActivity extends Activity implements OnClickListener {
 		
 		if(v.getId() == R.id.addActions) {
 			String query = "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=8&q=http%3A%2F%2Fnews.google.ru%2Fnews%3Foutput%3Drss";
-			AQuery aq = new AQuery(this);
-			aq.ajax(query, String.class, new AjaxCallback<String>() {
-			        @Override
-			        public void callback(String url, String html, AjaxStatus status) {
-			        	Log.d("INFO", html);
-			        	try {
-			        	NewsLocation data = JsonFastTransformer.getObjects(html, NewsLocation.class);
-			        	Log.d("fdf", data.getResponseDetails());
-			        	data.getResponseData().getFeed().getEntries().get(2).getLink();
-			        	}
-			        	catch(Exception e) {
-			        		Log.d("ErrorMY", e.toString());
-			        	}
-			        	
-			        }
-			      });
-		  
+			downloader = new AsynchDownloader<NewsLocation, JsonStringRealization>(this, query, NewsLocation.class);
+			downloader.execute();
+			
 			//Intent intent = new Intent(this, Music.class);
 			//startActivity(intent);
 		}
 		
+	}
+
+	@Override
+	public void onTaskComplete(JsonStringRealization result) {
+		NewsLocation a  =  (NewsLocation) downloader.getJsonStringRealization();
+		a.getResponseDetails();	
 	}
 
 }
