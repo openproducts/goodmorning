@@ -25,9 +25,10 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f08000e;
+        public static final int addActions=0x7f080000;
         public static final int buttonCheckedItemsPlaylist=0x7f080005;
         public static final int buttonMusic=0x7f080003;
-        public static final int buttonRadio=0x7f080000;
+        public static final int buttonRadio=0x7f080001;
         public static final int buttonVideo=0x7f080002;
         public static final int checkSong=0x7f080007;
         public static final int checkSongBox=0x7f080008;
@@ -38,7 +39,6 @@ public final class R {
         public static final int start=0x7f08000c;
         public static final int stop=0x7f08000d;
         public static final int textInfo=0x7f080009;
-        public static final int textView1=0x7f080001;
     }
     public static final class layout {
         public static final int main=0x7f030000;

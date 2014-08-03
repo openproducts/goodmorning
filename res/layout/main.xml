@@ -1,16 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"  >
 
-   
+   <Button
+        android:id="@+id/addActions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="39dp"
+        android:text="Add actions" />
+    
+    
 
     <Button
         android:id="@+id/buttonRadio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
         android:layout_marginLeft="39dp"
         android:text="SELECT MUSIC" />
     
@@ -19,8 +25,6 @@
         android:id="@+id/buttonVideo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
         android:layout_marginLeft="39dp"
         android:text="Video" />
      
@@ -29,8 +33,6 @@
         android:id="@+id/buttonMusic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
         android:layout_marginLeft="39dp"
         android:text="Music" />
 
