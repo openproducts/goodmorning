@@ -85,8 +85,9 @@ public class MainActivity extends Activity implements OnClickListener, AsyncTask
 	 	}
 	 
 	 	try {
-	 
 	 		myDbHelper.openDataBase();
+	 		myDbHelper.getAllCities();
+	 		myDbHelper.getCodeByCityName("Delhi");
 	 
 	 	}catch(SQLException sqle){
 	 

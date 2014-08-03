@@ -4,20 +4,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import classes.StaticInformation;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+import classes.StaticInformation;
 
 public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 	// The Android's default system path of your application database.
-	private static String DB_PATH = "/data/data/com.example.goodmorning/databases/";
-	private static String DB_NAME = StaticInformation.weatherDbName;
+	private static final String DB_PATH = "/data/data/com.example.goodmorning/databases/";
+	private static final String DB_NAME = StaticInformation.weatherDbName;
+
+	private static final String KEY_NAME = "Name";
+	private static final String KEY_LAT = "lat";
+	private static final String KEY_LON = "lon";
+	private static final String KEY_CODE = "countryCode";
+
 	private SQLiteDatabase dataBaseName;
 	private final Context context;
 
@@ -93,9 +100,6 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 		String myPath = DB_PATH + DB_NAME;
 		dataBaseName = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
-		Cursor c = dataBaseName.rawQuery("SELECT * FROM weatherDB;", null);
-		Log.d("MyApp", "cnt: " + c.getCount());
-
 	}
 
 	@Override
@@ -113,6 +117,31 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+	}
+
+	public List<String> getAllCities() {
+		Cursor c = dataBaseName.rawQuery("SELECT DISTINCT " + KEY_NAME
+				+ " FROM " + DB_NAME + ";", null);
+		List<String> cities = new ArrayList<String>();
+		if (c != null) {
+			while (c.moveToNext()) {
+				cities.add(c.getString(0));
+			}
+		}
+		return cities;
+	}
+
+	public List<String> getCodeByCityName(String nameCity) {
+		List<String> codes = new ArrayList<String>();
+		Cursor c = dataBaseName.rawQuery("SELECT " + KEY_CODE + " FROM "
+				+ DB_NAME + " WHERE " + KEY_NAME + " = ?",
+				new String[] { nameCity });
+		if (c != null) {
+			while (c.moveToNext()) {
+				codes.add(c.getString(0));
+			}
+		}
+		return codes;
 	}
 
 	// Add your public helper methods to access and get content from the
