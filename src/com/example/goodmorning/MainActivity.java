@@ -1,9 +1,13 @@
 package com.example.goodmorning;
 
 
+import java.io.IOException;
+
 import models.news.NewsLocation;
+import adapters.db.AssetDatabaseOpenHelper;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -63,12 +67,32 @@ public class MainActivity extends Activity implements OnClickListener, AsyncTask
 		}
 		
 		if(v.getId() == R.id.addActions) {
-			String query = "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=8&q=http%3A%2F%2Fnews.google.ru%2Fnews%3Foutput%3Drss";
-			downloader = new AsynchDownloader<NewsLocation, JsonStringRealization>(this, query, NewsLocation.class);
-			downloader.execute();
+			//String query = "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=8&q=http%3A%2F%2Fnews.google.ru%2Fnews%3Foutput%3Drss";
+			//downloader = new AsynchDownloader<NewsLocation, JsonStringRealization>(this, query, NewsLocation.class);
+			//downloader.execute();
 			
-			//Intent intent = new Intent(this, Music.class);
-			//startActivity(intent);
+			AssetDatabaseOpenHelper myDbHelper;// = new AssetDatabaseOpenHelper();
+	        myDbHelper = new AssetDatabaseOpenHelper(this);
+	 
+	        try {
+	 
+	        	myDbHelper.createDataBase();
+	 
+	 	} catch (IOException ioe) {
+	 
+	 		throw new Error("Unable to create database");
+	 
+	 	}
+	 
+	 	try {
+	 
+	 		myDbHelper.openDataBase();
+	 
+	 	}catch(SQLException sqle){
+	 
+	 		throw sqle;
+	 
+	 	}
 		}
 		
 	}
