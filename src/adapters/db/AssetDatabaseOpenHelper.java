@@ -13,6 +13,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import classes.CityNameCode;
 import classes.StaticInformation;
 
 public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
@@ -31,6 +32,19 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 	public AssetDatabaseOpenHelper(Context context) {
 		super(context, DB_NAME, null, 1);
 		this.context = context;
+		try {		 
+        	this.createDataBase();
+ 
+ 	    } catch (IOException ioe) {
+ 		throw new Error("Unable to create database");
+      	}
+ 
+ 	    try {
+ 		this.openDataBase();
+    	}catch(SQLException sqle){
+ 
+ 		throw sqle;
+ 	    }
 	}
 
 	// Creates a empty database on the system and rewrites it with your own
@@ -97,7 +111,7 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 
 	public void openDataBase() throws SQLException {
 		// Open the database
-		String myPath = DB_PATH + DB_NAME;
+		final String myPath = DB_PATH + DB_NAME;
 		dataBaseName = SQLiteDatabase.openDatabase(myPath, null,
 				SQLiteDatabase.OPEN_READONLY);
 	}
@@ -118,6 +132,32 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 	}
+	
+	public List<CityNameCode> getCitiesWithCodes(String cityName) {
+		List<CityNameCode> cs = new ArrayList<CityNameCode>();
+		Cursor c = dataBaseName.rawQuery("SELECT " + KEY_NAME + " , "
+				+ KEY_CODE + " FROM "
+				+ DB_NAME + " WHERE " + KEY_NAME + " = ?",
+				new String[] { cityName });
+		if (c != null) {
+			while (c.moveToNext()) {
+				cs.add(new CityNameCode(c.getString(0), c.getString(1)));
+			}
+		}
+		return cs;
+	}
+
+	public List<CityNameCode> getCitiesWithCodes() {
+		List<CityNameCode> cs = new ArrayList<CityNameCode>();
+		Cursor c = dataBaseName.rawQuery("SELECT " + KEY_NAME + " , "
+				+ KEY_CODE + " FROM " + DB_NAME + ";", null);
+		if (c != null) {
+			while (c.moveToNext()) {
+				cs.add(new CityNameCode(c.getString(0), c.getString(1)));
+			}
+		}
+		return cs;
+	}
 
 	public List<String> getAllCities() {
 		Cursor c = dataBaseName.rawQuery("SELECT DISTINCT " + KEY_NAME
@@ -126,6 +166,18 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 		if (c != null) {
 			while (c.moveToNext()) {
 				cities.add(c.getString(0));
+			}
+		}
+		return cities;
+	}
+	
+	public List<String> getAllCitiesWithCodes() {
+		Cursor c = dataBaseName.rawQuery("SELECT DISTINCT " + KEY_NAME + " , " + KEY_CODE
+				+ " FROM " + DB_NAME + ";", null);
+		List<String> cities = new ArrayList<String>();
+		if (c != null) {
+			while (c.moveToNext()) {
+				cities.add(c.getString(0) + " " + c.getString(1));
 			}
 		}
 		return cities;
@@ -143,11 +195,13 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 		}
 		return codes;
 	}
-
-	// Add your public helper methods to access and get content from the
-	// database.
-	// You could return cursors by doing "return myDataBase.query(....)" so it'd
-	// be easy
-	// to you to create adapters for your views.
+	
+	public boolean cityExist(String nameCity) {
+		Cursor c = dataBaseName.rawQuery("SELECT " + KEY_CODE + " FROM "
+				+ DB_NAME + " WHERE " + KEY_NAME + " = ?",
+				new String[] { nameCity });
+		if (c.getCount() > 0) return true;
+		return false;
+	}
 
 }

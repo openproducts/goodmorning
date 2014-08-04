@@ -67,33 +67,8 @@ public class MainActivity extends Activity implements OnClickListener, AsyncTask
 		}
 		
 		if(v.getId() == R.id.addActions) {
-			//String query = "http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=8&q=http%3A%2F%2Fnews.google.ru%2Fnews%3Foutput%3Drss";
-			//downloader = new AsynchDownloader<NewsLocation, JsonStringRealization>(this, query, NewsLocation.class);
-			//downloader.execute();
-			
-			AssetDatabaseOpenHelper myDbHelper;// = new AssetDatabaseOpenHelper();
-	        myDbHelper = new AssetDatabaseOpenHelper(this);
-	 
-	        try {
-	 
-	        	myDbHelper.createDataBase();
-	 
-	 	} catch (IOException ioe) {
-	 
-	 		throw new Error("Unable to create database");
-	 
-	 	}
-	 
-	 	try {
-	 		myDbHelper.openDataBase();
-	 		myDbHelper.getAllCities();
-	 		myDbHelper.getCodeByCityName("Delhi");
-	 
-	 	}catch(SQLException sqle){
-	 
-	 		throw sqle;
-	 
-	 	}
+			Intent intent = new Intent(this, WeatherActivity.class);
+			startActivity(intent);
 		}
 		
 	}

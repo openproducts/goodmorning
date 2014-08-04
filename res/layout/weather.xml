@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/saveWeatherInformation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SaveInfo" />
+
+    <TableRow
+        android:id="@+id/rowCountry"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/textCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="City" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteCounry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/rowTemp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/textTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Temp" />
+
+        <CheckBox
+            android:id="@+id/checkTemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/rowWind"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/textWind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Wind" />
+
+        <CheckBox
+            android:id="@+id/checkWind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/rowHumidity"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/textHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Humidity" />
+
+        <CheckBox
+            android:id="@+id/checkHumidity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/rowPressure"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/textPressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Pressure" />
+
+        <CheckBox
+            android:id="@+id/checkPressure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </TableRow>
+
+</LinearLayout>
