@@ -1,9 +1,11 @@
 package com.example.goodmorning;
 
 import java.util.ArrayList;
-
 import adapters.SongAdapter;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +19,8 @@ public class SelectMusicPlaylistActivity extends Activity implements OnClickList
     private ListView items;
 	private SongAdapter adapter; 
 	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	@SuppressLint("CommitTransaction")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +32,7 @@ public class SelectMusicPlaylistActivity extends Activity implements OnClickList
 		items = (ListView) findViewById(R.id.listItemsPlaylist);
 		items.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		
-		adapter = new SongAdapter(this, new SongsInspector(this).getMusic());
+		adapter = new SongAdapter(this, new SongsInspector(this).getMusic(), getFragmentManager());
 		
 		items.setAdapter(adapter);
 			

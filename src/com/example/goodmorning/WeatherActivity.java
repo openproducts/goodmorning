@@ -45,11 +45,11 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		@Override
 		protected void onPostExecute(Void result) {
 			super.onPostExecute(result);
-			dialog.dismiss();
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
 					WeatherActivity.this, android.R.layout.simple_list_item_1,
 					WeatherActivity.this.list);
 			WeatherActivity.this.actv.setAdapter(adapter);
+			dialog.dismiss();
 		}
 
 		@Override

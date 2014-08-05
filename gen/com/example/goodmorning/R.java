@@ -22,51 +22,60 @@ public final class R {
     }
     public static final class drawable {
         public static final int ic_launcher=0x7f020000;
+        public static final int seekbar_progress=0x7f020001;
+        public static final int seekbar_progress_bg=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f080020;
+        public static final int action_settings=0x7f080026;
         public static final int addActions=0x7f080002;
-        public static final int autoCompleteCounry=0x7f080013;
-        public static final int buttonCheckedItemsPlaylist=0x7f080007;
+        public static final int autoCompleteCounry=0x7f080019;
+        public static final int buttonCheckedItemsPlaylist=0x7f08000b;
+        public static final int buttonLeftShift=0x7f080008;
         public static final int buttonMusic=0x7f080005;
+        public static final int buttonPlay=0x7f080007;
         public static final int buttonRadio=0x7f080003;
+        public static final int buttonRightShift=0x7f080009;
         public static final int buttonVideo=0x7f080004;
-        public static final int checkHumidity=0x7f08001c;
-        public static final int checkPressure=0x7f08001f;
-        public static final int checkSong=0x7f080009;
-        public static final int checkSongBox=0x7f08000a;
-        public static final int checkTemp=0x7f080016;
-        public static final int checkWind=0x7f080019;
+        public static final int checkHumidity=0x7f080022;
+        public static final int checkPressure=0x7f080025;
+        public static final int checkSong=0x7f08000f;
+        public static final int checkSongBox=0x7f080010;
+        public static final int checkTemp=0x7f08001c;
+        public static final int checkWind=0x7f08001f;
+        public static final int checkedTable=0x7f08000e;
         public static final int cityCode=0x7f080001;
         public static final int cityName=0x7f080000;
-        public static final int digitalClock=0x7f08000d;
-        public static final int listItemsPlaylist=0x7f080008;
+        public static final int digitalClock=0x7f080013;
+        public static final int fragment=0x7f08000c;
+        public static final int listItemsPlaylist=0x7f08000d;
         public static final int listView1=0x7f080006;
-        public static final int progressBar=0x7f08000c;
-        public static final int rowCountry=0x7f080011;
-        public static final int rowHumidity=0x7f08001a;
-        public static final int rowPressure=0x7f08001d;
-        public static final int rowTemp=0x7f080014;
-        public static final int rowWind=0x7f080017;
-        public static final int saveWeatherInformation=0x7f080010;
-        public static final int start=0x7f08000e;
-        public static final int stop=0x7f08000f;
-        public static final int textCity=0x7f080012;
-        public static final int textHumidity=0x7f08001b;
-        public static final int textInfo=0x7f08000b;
-        public static final int textPressure=0x7f08001e;
-        public static final int textTemp=0x7f080015;
-        public static final int textWind=0x7f080018;
+        public static final int progressBar=0x7f080012;
+        public static final int rowCountry=0x7f080017;
+        public static final int rowHumidity=0x7f080020;
+        public static final int rowPressure=0x7f080023;
+        public static final int rowTemp=0x7f08001a;
+        public static final int rowWind=0x7f08001d;
+        public static final int saveWeatherInformation=0x7f080016;
+        public static final int songProgressBar=0x7f08000a;
+        public static final int start=0x7f080014;
+        public static final int stop=0x7f080015;
+        public static final int textCity=0x7f080018;
+        public static final int textHumidity=0x7f080021;
+        public static final int textInfo=0x7f080011;
+        public static final int textPressure=0x7f080024;
+        public static final int textTemp=0x7f08001b;
+        public static final int textWind=0x7f08001e;
     }
     public static final class layout {
         public static final int city_code=0x7f030000;
         public static final int main=0x7f030001;
         public static final int music=0x7f030002;
-        public static final int select_music_playlist=0x7f030003;
-        public static final int select_song=0x7f030004;
-        public static final int stream=0x7f030005;
-        public static final int video_stream=0x7f030006;
-        public static final int weather=0x7f030007;
+        public static final int music_buttons_fragment=0x7f030003;
+        public static final int select_music_playlist=0x7f030004;
+        public static final int select_song=0x7f030005;
+        public static final int stream=0x7f030006;
+        public static final int video_stream=0x7f030007;
+        public static final int weather=0x7f030008;
     }
     public static final class menu {
         public static final int main=0x7f070000;

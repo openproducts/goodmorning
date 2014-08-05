@@ -1,15 +1,16 @@
 package classes;
 
 import java.util.ArrayList;
-import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
+
 public class SongsInspector {
-    private Activity activity;
+    private Context context;
     private ArrayList<SongInfo> songs;
     
-	public SongsInspector(Activity activity) {
-		this.activity = activity;
+	public SongsInspector(Context context) {
+		this.context = context;
 		songs = new ArrayList<SongInfo>();
 	}
 	
@@ -24,7 +25,7 @@ public class SongsInspector {
 				MediaStore.Audio.Media.DISPLAY_NAME,
 				MediaStore.Audio.Media.DURATION };
 
-		Cursor cursor = activity.managedQuery(
+		Cursor cursor = context.getContentResolver().query(
 				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
 				selection, null, null);
 

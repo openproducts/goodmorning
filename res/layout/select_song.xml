@@ -2,15 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal" >
+    android:orientation="vertical" >
 
-   <TextView 
-       android:id="@+id/checkSong"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"/>
-   
-   <CheckBox 
-       android:id="@+id/checkSongBox"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"/>
+    <TableRow
+        android:id="@+id/checkedTable"
+        android:layout_width="fill_parent"
+        android:layout_height="400dp"
+        android:weightSum="2" >
+
+        <TextView
+            android:id="@+id/checkSong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/checkSongBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </TableRow>
+
+ 
+
 </LinearLayout>
