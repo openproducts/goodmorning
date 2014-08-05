@@ -77,15 +77,18 @@ public class SongAdapter extends ArrayAdapter<SongInfo> {
 
 		notifyDataSetChanged();
 	}
-	
+
 	@SuppressLint("NewApi")
 	private void addFragment(final SongInfo songInfo) {
-		    fr = new MusicButtonsFragment();       
-		    fr.setPath(songInfo.getPath());
-		    FragmentTransaction ft = fm.beginTransaction();
-		    ft.replace(R.id.fragment, fr);
-		    ft.addToBackStack(null);
-		    ft.commit();  
+		for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+			fm.popBackStack();
+		}
+		fr = new MusicButtonsFragment();
+		fr.setPath(songInfo.getPath());
+		FragmentTransaction ft = fm.beginTransaction();
+		ft.replace(R.id.fragment, fr);
+		ft.addToBackStack(null);
+		ft.commit();
 	}
 
 	@Override
@@ -102,24 +105,23 @@ public class SongAdapter extends ArrayAdapter<SongInfo> {
 			TextView checkedTextView = (TextView) rowView
 					.findViewById(R.id.checkSong);
 			checkedTextView.setText(items.get(position).getTitle());
-            checkedTextView.setOnClickListener(new OnClickListener() {
-				
+			checkedTextView.setOnClickListener(new OnClickListener() {
+
 				@Override
 				public void onClick(View v) {
-					addFragment(songInfo);	
+					addFragment(songInfo);
 				}
-			}); 
-			
-			
+			});
+
 			CheckBox check = (CheckBox) rowView.findViewById(R.id.checkSongBox);
 			check.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
 					toggleChecked(position);
 				}
 			});
-			
+
 		}
 
 		return rowView;

@@ -5,13 +5,16 @@ import android.app.Fragment;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import classes.SingleMediaPlayer;
+import classes.Utilities;
 
 import com.example.goodmorning.R;
 
@@ -19,10 +22,12 @@ import com.example.goodmorning.R;
 public class MusicButtonsFragment extends Fragment implements OnCompletionListener, OnClickListener, SeekBar.OnSeekBarChangeListener{
 	private String path;
 	private SingleMediaPlayer mp;
+    private Handler mHandler = new Handler();
     private Button buttonPlay;
-    private Button buttonLeftShift;
-    private Button buttonRightShift;
     private SeekBar songProgressBar;
+    private TextView songCurrentDurationLabel;
+    private TextView songTotalDurationLabel;
+    private Utilities utils;
 	
 	public void setPath(String path) {
 		this.path = path;
@@ -34,18 +39,16 @@ public class MusicButtonsFragment extends Fragment implements OnCompletionListen
 
 		buttonPlay = (Button) v.findViewById(R.id.buttonPlay);
 		buttonPlay.setOnClickListener(this);
-        
-		buttonLeftShift = (Button) v.findViewById(R.id.buttonLeftShift);
-		buttonLeftShift.setOnClickListener(this);
-		
-		buttonRightShift = (Button) v.findViewById(R.id.buttonRightShift);
-		buttonRightShift.setOnClickListener(this);
 		
 	    songProgressBar = (SeekBar) v.findViewById(R.id.songProgressBar);
 		
+	    songCurrentDurationLabel = (TextView) v.findViewById(R.id.songCurrentDurationLabel);
+        songTotalDurationLabel = (TextView) v.findViewById(R.id.songTotalDurationLabel);
+	    
 	    mp = new SingleMediaPlayer().getInstance();
 	    songProgressBar.setOnSeekBarChangeListener(this); // Important
-        mp.setOnCompletionListener(this); // Imp
+        mp.setOnCompletionListener(this);
+        utils = new Utilities();
         
         playSong(path);
         
@@ -64,39 +67,67 @@ public class MusicButtonsFragment extends Fragment implements OnCompletionListen
             //songTitleLabel.setText(songTitle);
  
             // Changing Button Image to pause image
-            //btnPlay.setImageResource(R.drawable.btn_pause);
+            buttonPlay.setText("PlayIng");
  
             // set Progress bar values
             songProgressBar.setProgress(0);
             songProgressBar.setMax(100);
  
             // Updating progress bar
-            //updateProgressBar();
+            updateProgressBar();
         } catch (Exception e) {
             e.printStackTrace();
         } 
     }
 	
-
+	 public void updateProgressBar() {
+	        mHandler.postDelayed(mUpdateTimeTask, 100);
+	    }   
+	 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.buttonPlay: {
-
-			break;
-		}
-		case R.id.buttonLeftShift: {
-
-			break;
-		}
-		case R.id.buttonRightShift: {
-
+			 if(mp.isPlaying()){
+                 if(mp!=null){
+                     mp.pause();
+                     // Changing button image to play button
+                     buttonPlay.setText("Play");
+                 }
+             }else{
+                 // Resume song
+                 if(mp!=null){
+                     mp.start();
+                     // Changing button image to pause button
+                     buttonPlay.setText("Stop");
+                 }
+             }
 			break;
 		}
 
 		}
 
 	}
+	
+	private Runnable mUpdateTimeTask = new Runnable() {
+        public void run() {
+            long totalDuration = mp.getDuration();
+            long currentDuration = mp.getCurrentPosition();
+
+            // Displaying Total Duration time
+            songTotalDurationLabel.setText("" + utils.milliSecondsToTimer(totalDuration));
+            // Displaying time completed playing
+            songCurrentDurationLabel.setText("" + utils.milliSecondsToTimer(currentDuration));
+
+            // Updating progress bar
+            int progress = (int)(utils.getProgressPercentage(currentDuration, totalDuration));
+            //Log.d("Progress", ""+progress);
+            songProgressBar.setProgress(progress);
+
+            // Running this thread after 100 milliseconds
+            mHandler.postDelayed(this, 100);
+        }
+     };
 
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress,
@@ -107,19 +138,33 @@ public class MusicButtonsFragment extends Fragment implements OnCompletionListen
 
 	@Override
 	public void onStartTrackingTouch(SeekBar seekBar) {
-		// TODO Auto-generated method stub
+		mHandler.removeCallbacks(mUpdateTimeTask);
 		
 	}
 
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
-		// TODO Auto-generated method stub
+		mHandler.removeCallbacks(mUpdateTimeTask);
+        int totalDuration = mp.getDuration();
+        int currentPosition = utils.progressToTimer(seekBar.getProgress(), totalDuration);
+ 
+        // forward or backward to certain seconds
+        mp.seekTo(currentPosition);
+ 
+        // update timer progress again
+        updateProgressBar();
 		
 	}
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
-		// TODO Auto-generated method stub
-		
+		playSong(path);
 	}
+	
+	@Override
+    public void onDestroy(){
+		super.onDestroy();
+		mp.stop();
+        //mp.release();
+    }
 }
