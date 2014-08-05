@@ -32,19 +32,20 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 	public AssetDatabaseOpenHelper(Context context) {
 		super(context, DB_NAME, null, 1);
 		this.context = context;
-		try {		 
-        	this.createDataBase();
- 
- 	    } catch (IOException ioe) {
- 		throw new Error("Unable to create database");
-      	}
- 
- 	    try {
- 		this.openDataBase();
-    	}catch(SQLException sqle){
- 
- 		throw sqle;
- 	    }
+		try {
+			this.createDataBase();
+
+		} catch (IOException ioe) {
+			throw new Error("Unable to create database");
+		}
+
+		try {
+			
+			this.openDataBase();
+		} catch (SQLException sqle) {
+
+			throw sqle;
+		}
 	}
 
 	// Creates a empty database on the system and rewrites it with your own
@@ -71,7 +72,7 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 		try {
 			String myPath = DB_PATH + DB_NAME;
 			checkDB = SQLiteDatabase.openDatabase(myPath, null,
-					SQLiteDatabase.OPEN_READONLY);
+					SQLiteDatabase.NO_LOCALIZED_COLLATORS|SQLiteDatabase.OPEN_READWRITE);
 
 		} catch (SQLiteException e) {
 			// database does't exist yet.
@@ -112,8 +113,9 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 	public void openDataBase() throws SQLException {
 		// Open the database
 		final String myPath = DB_PATH + DB_NAME;
+		
 		dataBaseName = SQLiteDatabase.openDatabase(myPath, null,
-				SQLiteDatabase.OPEN_READONLY);
+				SQLiteDatabase.NO_LOCALIZED_COLLATORS|SQLiteDatabase.OPEN_READWRITE);	
 	}
 
 	@Override
@@ -132,12 +134,12 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
 	}
-	
+
 	public List<CityNameCode> getCitiesWithCodes(String cityName) {
 		List<CityNameCode> cs = new ArrayList<CityNameCode>();
-		Cursor c = dataBaseName.rawQuery("SELECT " + KEY_NAME + " , "
-				+ KEY_CODE + " FROM "
-				+ DB_NAME + " WHERE " + KEY_NAME + " = ?",
+		Cursor c = dataBaseName.rawQuery(
+				"SELECT " + KEY_NAME + " , " + KEY_CODE + " FROM " + DB_NAME
+						+ " WHERE " + KEY_NAME + " = ?",
 				new String[] { cityName });
 		if (c != null) {
 			while (c.moveToNext()) {
@@ -170,10 +172,23 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 		}
 		return cities;
 	}
-	
+
 	public List<String> getAllCitiesWithCodes() {
-		Cursor c = dataBaseName.rawQuery("SELECT DISTINCT " + KEY_NAME + " , " + KEY_CODE
-				+ " FROM " + DB_NAME + ";", null);
+		Cursor c = dataBaseName.rawQuery("SELECT DISTINCT " + KEY_NAME + " , "
+				+ KEY_CODE + " FROM " + DB_NAME + ";", null);
+		List<String> cities = new ArrayList<String>();
+		if (c != null) {
+			while (c.moveToNext()) {
+				cities.add(c.getString(0) + " " + c.getString(1));
+			}
+		}
+		return cities;
+	}
+
+	public List<String> getAllCitiesWithCodes(String partStr) {
+		Cursor c = dataBaseName.rawQuery("SELECT " + KEY_NAME + " , "
+				+ KEY_CODE + " FROM " + DB_NAME + " WHERE " + KEY_NAME
+				+ " LIKE \"" + partStr + "%\"" + ";", null);
 		List<String> cities = new ArrayList<String>();
 		if (c != null) {
 			while (c.moveToNext()) {
@@ -195,12 +210,13 @@ public class AssetDatabaseOpenHelper extends SQLiteOpenHelper {
 		}
 		return codes;
 	}
-	
+
 	public boolean cityExist(String nameCity) {
 		Cursor c = dataBaseName.rawQuery("SELECT " + KEY_CODE + " FROM "
 				+ DB_NAME + " WHERE " + KEY_NAME + " = ?",
 				new String[] { nameCity });
-		if (c.getCount() > 0) return true;
+		if (c.getCount() > 0)
+			return true;
 		return false;
 	}
 

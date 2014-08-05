@@ -1,24 +1,24 @@
 package com.example.goodmorning;
 
 import java.util.List;
-
 import adapters.db.AssetDatabaseOpenHelper;
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
-import classes.DownloaderProgressDialog;
 
 public class WeatherActivity extends Activity implements OnClickListener {
 	private Button save;
 	private AutoCompleteTextView actv;
 	private AssetDatabaseOpenHelper dbHelper;
 	private List<String> list;
+	private final int MIN_LENGTH_WORD_FOR_SEATCH = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,55 +31,42 @@ public class WeatherActivity extends Activity implements OnClickListener {
 		dbHelper = new AssetDatabaseOpenHelper(this);
 
 		actv = (AutoCompleteTextView) findViewById(R.id.autoCompleteCounry);
+		actv.addTextChangedListener(new TextWatcher() {
 
-		new Task().execute();
-	}
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				final String text = actv.getText().toString();
+				if (text.length() >= MIN_LENGTH_WORD_FOR_SEATCH) {
+					list = dbHelper.getAllCitiesWithCodes(text);
+					ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+							WeatherActivity.this,
+							android.R.layout.simple_list_item_1, list);
+					actv.setAdapter(adapter);
+				}
+			}
 
-	private class Task extends AsyncTask<Void, Void, Void> {
-		private DownloaderProgressDialog dialog;
+			@Override
+			public void afterTextChanged(Editable s) {}
 
-		public Task() {
-			dialog = new DownloaderProgressDialog(WeatherActivity.this);
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-					WeatherActivity.this, android.R.layout.simple_list_item_1,
-					WeatherActivity.this.list);
-			WeatherActivity.this.actv.setAdapter(adapter);
-			dialog.dismiss();
-		}
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			this.dialog.show();
-		}
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			WeatherActivity.this.list = WeatherActivity.this.dbHelper
-					.getAllCitiesWithCodes();
-			return null;
-		}
-
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {};
+		});
 	}
 
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.saveWeatherInformation) { 
+		if (v.getId() == R.id.saveWeatherInformation) {
 			final String nameCity = actv.getText().toString().split(" ")[0];
-			if(nameCity.equals("") || !dbHelper.cityExist(nameCity)) {
-				Toast toast = Toast.makeText(getApplicationContext(), 
-						   "NONON!", Toast.LENGTH_SHORT); 
-				toast.show(); 
-			}
-			else {
-				Toast toast = Toast.makeText(getApplicationContext(), 
-						   "YEYEYS!", Toast.LENGTH_SHORT); 
-				toast.show(); 
+			if (nameCity.equals("") || !dbHelper.cityExist(nameCity)) {
+				Toast toast = Toast.makeText(getApplicationContext(), "NONON!",
+						Toast.LENGTH_SHORT);
+				toast.show();
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(),
+						"YEYEYS!", Toast.LENGTH_SHORT);
+				toast.show();
 			}
 		}
 	}

@@ -6,17 +6,16 @@ import android.database.Cursor;
 import android.provider.MediaStore;
 
 public class SongsInspector {
-    private Context context;
-    private ArrayList<SongInfo> songs;
-    
+	private Context context;  
+	private ArrayList<SongInfo> songs;
+
 	public SongsInspector(Context context) {
 		this.context = context;
 		songs = new ArrayList<SongInfo>();
 	}
-	
-	
+
 	public ArrayList<SongInfo> getMusic() {
-		
+
 		final String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
 
 		final String[] projection = { MediaStore.Audio.Media._ID,
@@ -29,11 +28,14 @@ public class SongsInspector {
 				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
 				selection, null, null);
 
-		while (cursor.moveToNext()) {
-			songs.add(new SongInfo(cursor.getString(4), cursor.getString(1),
-					cursor.getString(3)));
+		cursor.getCount();
+		if (cursor != null) {
+			while (cursor.moveToNext()) {
+				songs.add(new SongInfo(cursor.getString(4),
+						cursor.getString(1), cursor.getString(3)));
+			}
 		}
+		cursor.close();
 		return songs;
 	}
 }
-

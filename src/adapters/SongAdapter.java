@@ -3,13 +3,9 @@ package adapters;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,12 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import classes.SongInfo;
-
 import com.example.goodmorning.R;
 
 import fragments.MusicButtonsFragment;
 
-@SuppressLint("NewApi")
 public class SongAdapter extends ArrayAdapter<SongInfo> {
 	private Context context;
 	private List<SongInfo> items;
@@ -78,7 +72,6 @@ public class SongAdapter extends ArrayAdapter<SongInfo> {
 		notifyDataSetChanged();
 	}
 
-	@SuppressLint("NewApi")
 	private void addFragment(final SongInfo songInfo) {
 		for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
 			fm.popBackStack();
