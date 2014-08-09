@@ -6,4 +6,5 @@ public class StaticInformation {
      public final static String standartLanguage = "RU";
      
      public final static String weatherDbName = "weatherDB";
+     public final static String dayOfWeek = "dayOfweek";
 }

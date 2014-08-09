@@ -2,9 +2,9 @@ package models.actions;
 
 public class WeatherAction extends Action {
 
-	public WeatherAction(int volume, int type, String description,
+	public WeatherAction(int volume, String description,
 			String beginTime, String endTime) {
-		super(volume, type, description, beginTime, endTime);
+		super(volume, description, beginTime, endTime);
 	}
 
 }

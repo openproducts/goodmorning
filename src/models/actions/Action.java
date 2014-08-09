@@ -2,12 +2,11 @@ package models.actions;
 
 public abstract class Action {
 	private int volume;
-	private int type;
 	private String description;
 	private String beginTime;
 	private String endTime;
 
-	public Action(int volume, int type, String description, String beginTime, String endTime) {
+	public Action(int volume, String description, String beginTime, String endTime) {
 		this.setVolume(volume);
 		this.setBeginTime(beginTime);
 		this.setDescription(description);
@@ -21,14 +20,6 @@ public abstract class Action {
 
 	public void setVolume(int volume) {
 		this.volume = volume;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
 	}
 
 	public String getDescription() {

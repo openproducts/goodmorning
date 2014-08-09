@@ -28,7 +28,6 @@ public class SongsInspector {
 				MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, projection,
 				selection, null, null);
 
-		cursor.getCount();
 		if (cursor != null) {
 			while (cursor.moveToNext()) {
 				songs.add(new SongInfo(cursor.getString(4),

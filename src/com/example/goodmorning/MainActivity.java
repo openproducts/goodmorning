@@ -66,7 +66,7 @@ public class MainActivity extends Activity implements OnClickListener, AsyncTask
 		}
 		
 		if(v.getId() == R.id.addActions) {
-			Intent intent = new Intent(this, WeatherActivity.class);
+			Intent intent = new Intent(this, SelectDayOfWeekActivity.class);
 			startActivity(intent);
 		}
 		
